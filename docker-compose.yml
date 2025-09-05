@@ -1,0 +1,20 @@
+services:
+
+  server:
+    container_name: chat-server
+    image: server
+    ports:
+      - "65432:65432"
+    environment:
+      # - MONGO_DATABASE_URI=mongodb://localhost:27017/chat_application
+      - MONGO_DATABASE_URI=mongodb://host.docker.internal:27017/chat_application
+
+  client:
+    image: client
+    container_name: chat-client
+    stdin_open: true # Allows for interactive input (input())
+    tty: true        # Connects a TTY
+    environment:
+      # Inside the docker network, the server is found by its service name
+      - SERVER_HOST=192.168.110.150
+      - NAME=Gajendra
